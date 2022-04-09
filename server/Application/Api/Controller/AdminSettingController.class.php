@@ -128,7 +128,8 @@ class AdminSettingController extends BaseController
                     // modify by hao_chao: 添加别名为真实姓名，专门为大华AD域对接定制
                     //D("User")->register($ldap_user, $ldap_user . get_rand_str());
                     $alias = $data[$i][$alias_field] ? $data[$i][$alias_field][0] : '';
-                    D("User")->registerLdap($ldap_user, $ldap_user . get_rand_str(), $alias);
+                    $mail = $data[$i]['mail'] ? $data[$i]['mail'][0] : '';
+                    D("User")->registerLdap($ldap_user, $ldap_user . get_rand_str(), $alias, $mail);
                 }
             }
 

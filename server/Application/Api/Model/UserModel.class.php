@@ -30,10 +30,10 @@ class UserModel extends BaseModel
      * 注册新用户（LDAP）
      *
      */
-    public function registerLdap($username, $password, $alias)
+    public function registerLdap($username, $password, $alias, $mail)
     {
         $password = md5(base64_encode(md5($password)) . '576hbgh6');
-        return $this->add(array('username' => $username, 'password' => $password, 'reg_time' => time(), 'name' => $alias));
+        return $this->add(array('username' => $username, 'password' => $password, 'reg_time' => time(), 'name' => $alias, 'email' => $mail));
     }
 
     //修改用户密码
