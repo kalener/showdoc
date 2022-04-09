@@ -60,6 +60,13 @@
                 placeholder="例如 cn 或者 sAMAccountName"
               ></el-input>
             </el-form-item>
+            <el-form-item label="ldap user alias filed">
+              <el-input
+                v-model="form.ldap_form.user_alias_field"
+                class="form-el"
+                placeholder="可选，如：nickname"
+              ></el-input>
+            </el-form-item>
             <el-form-item label="search filter">
               <el-input
                 v-model="form.ldap_form.search_filter"

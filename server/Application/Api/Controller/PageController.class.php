@@ -200,9 +200,13 @@ class PageController extends BaseController
 
         $PageHistory = D("PageHistory")->where("page_id = '$page_id' ")->order(" addtime desc")->limit(20)->select();
 
+        $author_uid = $page['author_uid'];
+        $user_array = D("User")->where("uid = '$author_uid' ")->Field('username,name')->find();
         if ($PageHistory) {
             foreach ($PageHistory as $key => &$value) {
                 $value['addtime'] = date("Y-m-d H:i:s", $value['addtime']);
+                // modify by hao_chao: 修订历史中修改人信息带入用户真实姓名
+                $value['author_username'] = $value['author_username'] . '(' . $user_array['name'] . ')';
                 $page_content = uncompress_string($value['page_content']);
                 if (!empty($page_content)) {
                     $value['page_content'] = htmlspecialchars_decode($page_content);

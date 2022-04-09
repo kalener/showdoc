@@ -84,6 +84,8 @@ class AdminSettingController extends BaseController
         $ldap_open = intval(I("ldap_open"));
         $ldap_form = I("ldap_form");
 
+        $alias_field = $ldap_form['user_alias_field'] ? $ldap_form['user_alias_field'] : '';
+
         if ($ldap_open) {
             if (!$ldap_form['user_field']) {
                 $ldap_form['user_field'] = 'cn';
@@ -123,7 +125,10 @@ class AdminSettingController extends BaseController
                 }
                 //如果该用户不在数据库里，则帮助其注册
                 if (!D("User")->isExist($ldap_user)) {
-                    D("User")->register($ldap_user, $ldap_user . get_rand_str());
+                    // modify by hao_chao: 添加别名为真实姓名，专门为大华AD域对接定制
+                    //D("User")->register($ldap_user, $ldap_user . get_rand_str());
+                    $alias = $data[$i][$alias_field] ? $data[$i][$alias_field][0] : '';
+                    D("User")->registerLdap($ldap_user, $ldap_user . get_rand_str(), $alias);
                 }
             }
 
